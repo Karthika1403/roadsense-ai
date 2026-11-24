@@ -1,0 +1,25 @@
+*.db
+# Python
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Node
+node_modules/
+dist/
+build/
+
+# System
+.DS_Store
+
+# IDE
+.vscode/
+.idea/__pycache__/
+.env

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>RoadSense AI · Connected-bike intelligence</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&family=Inter:wght@300;400;500&display=swap">
+<style>
+:root{--bg:#f1ead9;--sf:#fbf7ec;--s2:#e8dfca;--tx:#16130e;--mu:#6d6556;--bd:#d6cbb2;--gold:#9a6f24;--red:#8f1d1d;--g:#2f7d4f;--a:#b7791f;--r:#b42318;--ln:#3a342a;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0c0b09;--sf:#14120f;--s2:#1c1915;--tx:#efe6d2;--mu:#9a917f;--bd:#2c2820;--gold:#c9a15a;--g:#5fcf8a;--a:#e8b04a;--r:#ff6a5a;--ln:#b9ae96;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0c0b09;--sf:#14120f;--s2:#1c1915;--tx:#efe6d2;--mu:#9a917f;--bd:#2c2820;--gold:#c9a15a;--g:#5fcf8a;--a:#e8b04a;--r:#ff6a5a;--ln:#b9ae96;color-scheme:dark}
+html{scroll-behavior:smooth;scroll-padding-top:calc(64px + env(safe-area-inset-top,0px))}*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:300 15px/1.65 Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
+h1,h2,h3,.dsp{font-family:Oswald,"Arial Narrow",Impact,sans-serif;text-transform:uppercase;font-weight:500;letter-spacing:.04em;line-height:1.05;margin:0}
+.num{font-variant-numeric:tabular-nums}
+nav.top{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:calc(14px + env(safe-area-inset-top,0px)) 32px 14px;background:#0c0b09;color:#efe6d2;border-bottom:1px solid #2c2820}
+.logo{font-family:Oswald,Impact,sans-serif;font-size:20px;letter-spacing:.28em;text-transform:uppercase}.logo i{font-style:normal;color:#c9a15a}
+nav.top div{display:flex;gap:26px;flex-wrap:wrap}nav.top a{color:#b9ae96;text-decoration:none;font:400 12px Oswald,sans-serif;letter-spacing:.18em;text-transform:uppercase}nav.top a:hover{color:#c9a15a}
+.hero{position:relative;overflow:hidden;background:radial-gradient(90% 120% at 75% 40%,#2a2013,#0c0b09 70%);color:#efe6d2;padding:90px 32px 80px}
+.hero .in{max-width:1240px;margin:0 auto;position:relative;z-index:2}.hero h1{font-size:clamp(42px,8vw,104px);max-width:11ch}.hero h1 em{font-style:normal;color:#c9a15a}
+.hero p{max-width:52ch;color:#b9ae96;font-size:17px;margin:22px 0 32px}
+.bg{position:absolute;right:-6%;bottom:-8%;width:min(900px,95%);opacity:.22;z-index:1}
+.btn{display:inline-block;font:500 13px Oswald,sans-serif;letter-spacing:.2em;text-transform:uppercase;padding:14px 28px;border:1px solid #c9a15a;color:#c9a15a;background:transparent;text-decoration:none;cursor:pointer}.btn:hover,.btn.sol{background:#c9a15a;color:#0c0b09}
+.stats{display:flex;flex-wrap:wrap;gap:0;border-top:1px solid #2c2820;margin-top:64px}.stats div{flex:1 1 160px;padding:18px 0;border-right:1px solid #2c2820;padding-left:20px}.stats div:first-child{padding-left:0}.stats b{font:500 34px Oswald,sans-serif;color:#c9a15a;display:block}.stats span{font-size:12px;color:#9a917f;letter-spacing:.08em;text-transform:uppercase}
+section.s{max-width:1240px;margin:0 auto;padding:72px 32px 8px}
+.eye{font:400 12px Oswald,sans-serif;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+section.s>h2{font-size:clamp(30px,4.5vw,52px);margin-bottom:12px}.lead{color:var(--mu);max-width:64ch;margin:0 0 32px}
+.console{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(300px,1fr);gap:1px;background:var(--bd);border:1px solid var(--bd)}@media(max-width:900px){.console{grid-template-columns:1fr}nav.top{padding:14px 16px}nav.top div{display:none}.hero,section.s{padding-left:16px;padding-right:16px}}
+.pane{background:var(--sf);padding:24px}.lab{font:400 11px Oswald,sans-serif;letter-spacing:.24em;text-transform:uppercase;color:var(--mu);margin-bottom:14px}
+.ctl{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:12px}
+select,.chip{background:transparent;color:var(--tx);border:1px solid var(--bd);padding:8px 12px;font:400 11px Oswald,sans-serif;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;border-radius:0}.chip:hover,select:hover{border-color:var(--gold)}.chip.fl{border-color:var(--r);color:var(--r)}
+.gz{display:flex;align-items:center;gap:22px;margin-bottom:22px}.gauge{position:relative;width:128px;height:128px;flex:none}.gauge b{position:absolute;inset:0;display:grid;place-items:center;font:400 40px Oswald,sans-serif}
+.kp{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--bd);border:1px solid var(--bd);margin-bottom:22px}@media(max-width:520px){.kp{grid-template-columns:1fr 1fr}}
+.kp div{background:var(--sf);padding:10px 12px}.kp small{display:block;font:400 10px Oswald,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:var(--mu)}.kp b{font:400 22px Oswald,sans-serif}.kp u{font-size:11px;color:var(--mu);text-decoration:none;margin-left:3px}
+.row{display:grid;grid-template-columns:1fr auto;gap:3px 12px;padding:9px 0;border-bottom:1px solid var(--bd);cursor:pointer}.row span{font-size:13px}.row em{font:400 15px Oswald,sans-serif;font-style:normal}.row .tr{grid-column:1/3;height:2px;background:var(--bd)}.row .tr i{display:block;height:100%;transition:width .5s,background .5s}.row.on span{color:var(--gold)}
+.det{margin-top:14px;font-size:13px;color:var(--mu)}.det b{color:var(--tx);font-weight:500}
+.pin{cursor:pointer}.pin .pl{animation:p 2.4s ease-out infinite;transform-box:fill-box;transform-origin:center}@keyframes p{0%{opacity:.6;transform:scale(1)}100%{opacity:0;transform:scale(3.2)}}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:24px}@media(max-width:900px){.two{grid-template-columns:1fr}}
+.adv{border:1px solid var(--bd);border-left:3px solid var(--a);background:var(--sf);padding:14px 18px;margin-bottom:10px}.adv.hi{border-left-color:var(--r)}.adv.ok{border-left-color:var(--g)}
+.adv h3{font-size:17px;margin-bottom:4px}.adv p{margin:0;font-size:13.5px;color:var(--mu)}
+.tg{display:inline-block;font:400 10px Oswald,sans-serif;letter-spacing:.18em;text-transform:uppercase;border:1px solid var(--bd);padding:1px 8px;margin-right:6px;color:var(--gold)}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--bd);border:1px solid var(--bd)}@media(max-width:900px){.steps{grid-template-columns:1fr 1fr}}
+.steps div{background:var(--sf);padding:24px}.steps b{font:500 44px Oswald,sans-serif;color:var(--gold);display:block}.steps h3{font-size:18px;margin:6px 0}.steps p{font-size:13.5px;color:var(--mu);margin:0}
+table{width:100%;border-collapse:collapse;font-size:13.5px;background:var(--sf);border:1px solid var(--bd)}td,th{padding:12px 14px;border-bottom:1px solid var(--bd);text-align:left;vertical-align:top}th{font:400 11px Oswald,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.log div{border-left:2px solid var(--r);padding:6px 12px;margin-bottom:6px;font-size:13px;background:var(--s2)}.log small{color:var(--mu);display:block}
+.scroll{overflow-x:auto}.badge{font:11px ui-monospace,Menlo,monospace;border:1px solid var(--bd);padding:1px 7px}
+footer{margin-top:80px;background:#0c0b09;color:#9a917f;padding:40px 32px calc(40px + env(safe-area-inset-bottom,0px));font-size:12.5px}footer div{max-width:1240px;margin:0 auto}
+</style></head><body>
+<nav class="top"><span class="logo">Road<i>Sense</i></span><div><a href="#live">Live console</a><a href="#advisor">Service advisor</a><a href="#how">How it works</a><a href="#guide">Maintenance guide</a><a href="#honesty">Model honesty</a></div></nav>
+<header class="hero"><svg class="bg" id="bgb" viewBox="40 40 520 280"></svg><div class="in">
+<div class="eye" style="color:#c9a15a">Predictive maintenance for motorcycles</div>
+<h1>Know your machine <em>before</em> it tells you</h1>
+<p>RoadSense AI watches temperature, voltage, vibration and wear across every major system, flags what is drifting, and tells you what to service and when. A portfolio prototype of the intelligence layer behind a connected motorcycle.</p>
+<a class="btn sol" href="#live">Launch live console</a> &nbsp; <a class="btn" href="#how">How it works</a>
+<div class="stats"><div><b>7</b><span>Systems monitored</span></div><div><b>5</b><span>Live signals</span></div><div><b>3</b><span>Data origins, labelled</span></div><div><b>0</b><span>Real-bike claims</span></div></div></div></header>
+
+<section class="s" id="live"><div class="eye">Ride console</div><h2>Your bike, live</h2><p class="lead">A simulated ride streams sensor data into a digital twin. Select a pin to inspect a system, switch riding conditions, or inject a fault to watch the detector react.</p>
+<div class="console"><div class="pane"><div class="lab">Digital twin · select a sensor point</div><div id="twin"></div>
+<div class="ctl"><select id="sc"><option value="city">City stop-and-go</option><option value="hwy">Highway touring</option><option value="hill">Hill climb</option></select><select id="pw"><option value="ice">Combustion</option><option value="ev">Electric</option></select><button class="chip" id="run">Pause</button></div>
+<div class="ctl"><span class="lab" style="margin:0">Inject fault</span><button class="chip" data-f="heat">Overheat</button><button class="chip" data-f="batt">Battery fade</button><button class="chip" data-f="bear">Bearing wear</button><button class="chip" data-f="brk">Brake fade</button><button class="chip" data-f="">Clear</button></div></div>
+<div class="pane"><div class="gz"><div class="gauge" id="gg"></div><div><div class="dsp" id="rv" style="font-size:26px"></div><div class="lab" style="margin:4px 0 0">Ride health score</div></div></div>
+<div class="kp" id="kp"></div><div class="lab">Systems</div><div id="cl"></div><div class="det" id="det"></div></div></div></section>
+
+<section class="s" id="advisor"><div class="eye">Service advisor</div><h2>What to do next</h2><p class="lead">Advice updates with the live readings. Each item is labelled by where it comes from, so you always know what is a model output and what is general guidance.</p>
+<div class="two"><div id="adv"></div><div><div class="lab">Event log · rolling z-score, |z| &gt; 3</div><div class="log" id="al"></div></div></div></section>
+
+<section class="s" id="how"><div class="eye">Architecture</div><h2>From sensor to decision</h2><p class="lead">The same pipeline a connected-bike platform would use, built end to end.</p>
+<div class="steps"><div><b>01</b><h3>Sense</h3><p>Engine temperature, rpm, battery voltage, vibration, speed and load stream from the bike or the simulator.</p></div><div><b>02</b><h3>Validate and store</h3><p>A FastAPI service checks ranges with Pydantic and saves each reading to PostgreSQL.</p></div><div><b>03</b><h3>Model</h3><p>Anomaly detection, component health scoring and a failure-risk classifier run on every reading.</p></div><div><b>04</b><h3>Advise</h3><p>Rules and model outputs become labelled, prioritised service advice on this dashboard.</p></div></div>
+<div style="height:32px"></div><div class="scroll"><table><tr><th>Strategy</th><th>Rule</th><th>Weakness</th></tr><tr><td>Reactive</td><td>Fix it when it breaks</td><td>Roadside breakdowns, safety risk, costly repairs</td></tr><tr><td>Preventive</td><td>Service every set km or months</td><td>Replaces healthy parts, still misses early failures</td></tr><tr><td><b>Predictive</b></td><td>Service when data shows degradation</td><td>Needs sensors, data and models</td></tr></table></div></section>
+
+<section class="s" id="guide"><div class="eye">Maintenance guide</div><h2>The basics, by system</h2><p class="lead">General guidance only. Intervals vary by model and use, so always follow your owner’s manual and an authorised service centre.</p>
+<div class="scroll"><table><tr><th>System</th><th>What drifts first</th><th>Signal we watch</th><th>General habit</th></tr>
+<tr><td>Engine and cooling</td><td>Temperature climbs under load</td><td>Engine temp</td><td>Check coolant or oil level, keep airflow clear</td></tr>
+<tr><td>Battery and charging</td><td>Voltage sags, slow starts</td><td>Battery voltage</td><td>Keep terminals clean, test charging output</td></tr>
+<tr><td>Clutch and chain</td><td>Slack, noise, vibration</td><td>Vibration</td><td>Lubricate and adjust chain regularly</td></tr>
+<tr><td>Brakes</td><td>Pad wear, fade on long descents</td><td>Brake wear estimate</td><td>Inspect pads and fluid at each service</td></tr>
+<tr><td>Suspension, tyres, bearings</td><td>Roughness, uneven wear</td><td>Vibration</td><td>Check tyre pressure often, inspect bearings</td></tr></table></div></section>
+
+<section class="s" id="honesty"><div class="eye">Model honesty</div><h2>What this can and cannot claim</h2><p class="lead">Every row carries a data-origin tag, and the interface shows it. Neither public benchmark is a motorcycle.</p>
+<div class="scroll"><table><tr><th>Dataset</th><th>Tag</th><th>Role</th><th>Caveat</th></tr>
+<tr><td>AI4I 2020 (UCI, CC BY 4.0)</td><td><span class="badge">ai4i_synthetic</span></td><td>Failure classification benchmark</td><td>Synthetic, threshold-rule failures. High scores prove little.</td></tr>
+<tr><td>NASA C-MAPSS</td><td><span class="badge">cmapss_simulated</span></td><td>Remaining-life benchmark</td><td>Turbofan engines, not motorcycles.</td></tr>
+<tr><td>RoadSense simulator</td><td><span class="badge">roadsense_simulated</span></td><td>This live demo</td><td>Generated in your browser. Health scores are rule-based.</td></tr></table></div>
+<p class="lead" style="margin-top:20px">Failures are about 3.4% of AI4I rows, so a model that always predicts “no failure” scores about 96.6% accuracy and is useless. Recall, precision, F1 and PR-AUC are the honest measures. Remaining-life figures here are illustrative.</p></section>
+<footer><div>RoadSense AI is an independent portfolio project using simulated and public data. It is not affiliated with, endorsed by, or using any system from Royal Enfield or any motorcycle manufacturer. All brand names belong to their owners.</div></footer>
+<script>
+const $=s=>document.querySelector(s),clamp=(x,a,b)=>Math.max(a,Math.min(b,x)),n=(x,d=1)=>x.toFixed(d);
+const SYS={ice:[["engine","Engine & cooling",.22],["battery","Battery & charging",.14],["drive","Clutch & chain",.16],["fbrake","Front brake",.12],["rbrake","Rear brake",.08],["susp","Suspension",.12],["tyre","Tyres & bearings",.16]],
+ev:[["engine","Motor & controller",.22],["battery","Battery pack / BMS",.28],["drive","Final drive",.1],["fbrake","Front brake",.12],["rbrake","Rear brake",.08],["susp","Suspension",.1],["tyre","Tyres & bearings",.1]]};
+const SIG={engine:"engine temperature",battery:"battery voltage",drive:"vibration",fbrake:"brake wear",rbrake:"brake wear",susp:"vibration",tyre:"vibration"};
+const ADV={engine:"Reduce sustained high load and let the bike cool. Check coolant or oil level and that airflow is not blocked.",battery:"Check terminals and the charging output. Avoid short trips until the battery is tested.",drive:"Inspect chain slack and lubrication, and listen for clutch or sprocket noise.",fbrake:"Inspect front pads and brake fluid before the next ride. Avoid long hard descents.",rbrake:"Inspect rear pad thickness at your next stop.",susp:"Check fork seals, shock mounts and wheel bearings for play.",tyre:"Check tyre pressure and tread, then wheel bearings for roughness."};
+const PIN={engine:[318,168],battery:[392,138],drive:[400,203],fbrake:[150,222],rbrake:[470,210],susp:[168,150],tyre:[130,142]};
+const SC={city:{sp:28,rpm:3200,ld:.5,v:.4},hwy:{sp:95,rpm:4800,ld:.7,v:.7},hill:{sp:45,rpm:5600,ld:.95,v:.9}};
+let s={t:0,temp:85,rpm:3000,sp:0,bv:13.9,vib:.8,ld:.5,fault:"",fc:0,run:true,sel:"engine",h:{engine:100,battery:100,drive:100,fbrake:100,rbrake:100,susp:100,tyre:100},hist:[],alerts:[],bw:0,la:{}};
+const col=h=>h>75?"var(--g)":h>45?"var(--a)":"var(--r)",nz=a=>(Math.random()-.5)*a;
+function tick(){const p=SC[$("#sc").value],f=s.fault;s.t++;s.fc=f?s.fc+1:0;
+ s.sp+=(p.sp+nz(14)-s.sp)*.3;s.rpm+=(p.rpm+nz(500)-s.rpm)*.3;s.ld=p.ld+nz(.15);
+ s.temp+=(75+p.v*30+(f==="heat"?Math.min(s.fc,80)*.8:0)-s.temp)*.1+nz(1.2);
+ s.bv+=(13.9-(f==="batt"?clamp(s.fc*.02,0,2.2):0)-s.bv)*.2+nz(.08);
+ s.vib+=((.6+s.sp/120)+(f==="bear"?1.6:0)-s.vib)*.25+nz(.15);
+ if(Math.random()<.2)s.bw+=.002*(f==="brk"?8:1);
+ const T={engine:clamp(100-(s.temp-95)*3.5,0,100),battery:clamp(100-(13.9-s.bv)*45,0,100),drive:clamp(100-(s.vib-1.2)*30,0,100),fbrake:clamp(100-s.bw*100-(f==="brk"?s.fc*.6:0),0,100),rbrake:clamp(100-s.bw*60,0,100),susp:clamp(100-(s.vib-1.5)*18,0,100),tyre:clamp(100-(s.vib-1)*22,0,100)};
+ for(const k in T)s.h[k]=s.h[k]*.85+T[k]*.15;
+ const rd={temp:s.temp,bv:s.bv,vib:s.vib};
+ for(const k in rd){const w=s.hist.slice(-40).map(r=>r[k]);if(w.length>=20){const m=w.reduce((a,b)=>a+b)/w.length,sd=Math.sqrt(w.reduce((a,b)=>a+(b-m)**2,0)/w.length)||.01,z=(rd[k]-m)/sd;
+  if(Math.abs(z)>3&&s.t-(s.la[k]||-99)>15){s.la[k]=s.t;s.alerts.unshift({k,v:rd[k],z,t:new Date().toLocaleTimeString()});s.alerts=s.alerts.slice(0,8)}}}
+ s.hist.push(rd);if(s.hist.length>60)s.hist.shift()}
+const NM={temp:"Engine temperature",bv:"Battery voltage",vib:"Vibration"},UN={temp:" °C",bv:" V",vib:" g"};
+const wheel=cx=>`<circle cx="${cx}" cy="210" r="72"/><circle cx="${cx}" cy="210" r="62" stroke-width=".7"/><circle cx="${cx}" cy="210" r="9"/><circle cx="${cx}" cy="210" r="22" opacity=".5"/>`+[0,30,60,90,120,150].map(a=>{const c=Math.cos(a*Math.PI/180),d=Math.sin(a*Math.PI/180);return `<line x1="${cx-62*c}" y1="${210-62*d}" x2="${cx+62*c}" y2="${210+62*d}" stroke-width=".5" opacity=".6"/>`}).join("");
+const BIKE=`${wheel(130)}${wheel(470)}<path d="M130 210 L196 108 M196 108 L184 90 L214 84 M204 122 L150 222"/><path d="M214 118 C240 90 322 90 352 118 L342 142 L226 142 Z" fill="var(--s2)"/><path d="M356 122 C388 110 432 116 464 128 L456 142 L352 140 Z" fill="var(--s2)"/><path d="M246 142 L246 196 L372 196 L384 160 L372 142" fill="var(--s2)"/><path d="M372 150 L470 210 M440 132 L418 196"/><path d="M262 202 C320 218 410 216 524 188 L524 180 C410 204 330 204 262 190" fill="var(--s2)"/><path d="M330 200 L470 210" stroke-dasharray="3 3" opacity=".7"/>`;
+function render(){const L=SYS[$("#pw").value],ev=$("#pw").value==="ev",sc=L.reduce((a,c)=>a+s.h[c[0]]*c[2],0)/L.reduce((a,c)=>a+c[2],0);
+ $("#gg").innerHTML=`<svg viewBox="0 0 120 120" width="128" height="128"><circle cx="60" cy="60" r="52" fill="none" stroke="var(--bd)" stroke-width="3" pathLength="100" stroke-dasharray="75 25" transform="rotate(135 60 60)"/><circle cx="60" cy="60" r="52" fill="none" stroke="${col(sc)}" stroke-width="3" stroke-linecap="round" pathLength="100" stroke-dasharray="${sc*.75} 100" transform="rotate(135 60 60)" style="transition:all .5s"/></svg><b class="num" style="color:${col(sc)}">${Math.round(sc)}</b>`;
+ $("#rv").textContent=sc>75?"Healthy":sc>45?"Service soon":"Service now";$("#rv").style.color=col(sc);
+ const K=[["Speed",n(s.sp,0),"km/h"],[ev?"Motor rpm":"Engine rpm",n(s.rpm,0),""],[ev?"Motor temp":"Engine temp",n(s.temp),"°C"],["Battery",n(s.bv,2),"V"],["Vibration",n(s.vib,2),"g"],["Load",n(s.ld*100,0),"%"]];
+ $("#kp").innerHTML=K.map(x=>`<div><small>${x[0]}</small><b class="num">${x[1]}</b><u>${x[2]}</u></div>`).join("");
+ $("#cl").innerHTML=L.map(c=>{const h=s.h[c[0]];return `<div class="row${s.sel===c[0]?" on":""}" data-c="${c[0]}"><span>${c[1]}</span><em class="num" style="color:${col(h)}">${n(h,0)}</em><div class="tr"><i style="width:${h}%;background:${col(h)}"></i></div></div>`}).join("");
+ const sel=L.find(c=>c[0]===s.sel)||L[0],h=s.h[sel[0]];
+ $("#det").innerHTML=`<b>${sel[1]}</b> is driven by ${SIG[sel[0]]}.<br>Estimated remaining life: <b class="num">${Math.round(h*h/100*300)} km</b> (illustrative)`;
+ const pins=Object.entries(PIN).map(([k,[x,y]])=>`<g class="pin" data-c="${k}"><circle class="pl" cx="${x}" cy="${y}" r="6" fill="${col(s.h[k])}" stroke="none"/><circle cx="${x}" cy="${y}" r="${s.sel===k?7:5}" fill="${col(s.h[k])}" stroke="var(--sf)" stroke-width="2"/>${s.sel===k?`<line x1="${x}" y1="${y}" x2="${x}" y2="${y<150?y-40:y+60}" stroke-width=".8"/><text x="${x}" y="${y<150?y-46:y+74}" text-anchor="middle" fill="var(--tx)" stroke="none" font-size="11" letter-spacing="1.5" font-family="Oswald,sans-serif">${L.find(c=>c[0]===k)[1].toUpperCase()}</text>`:""}</g>`).join("");
+ $("#twin").innerHTML=`<svg viewBox="40 40 520 280" width="100%" fill="none" stroke="var(--ln)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${BIKE}${pins}</svg>`;
+ const bad=L.filter(c=>s.h[c[0]]<75).sort((a,b)=>s.h[a[0]]-s.h[b[0]]);
+ const mr=Math.round((1-Math.min(...L.map(c=>s.h[c[0]]))/100)*100);
+ $("#adv").innerHTML=`<div class="adv ${mr>60?"hi":mr>30?"":"ok"}"><h3>Failure risk: ${mr}%</h3><p><span class="tag tg">Rule-based</span>Derived from the weakest system. The trained classifier in the Python backend gives a model-based score.</p></div>`+(bad.length?bad.map(c=>`<div class="adv ${s.h[c[0]]<45?"hi":""}"><h3>${s.h[c[0]]<45?"Service now":"Watch"}: ${c[1]}</h3><p><span class="tg">Rule-based advice</span>${ADV[c[0]]}</p></div>`).join(""):`<div class="adv ok"><h3>All systems normal</h3><p><span class="tg">General info</span>Keep to the intervals in your owner’s manual. Try a fault injection above.</p></div>`);
+ $("#al").innerHTML=s.alerts.length?s.alerts.map(a=>`<div><b>${NM[a.k]}</b> <span class="num">${n(a.v,2)}${UN[a.k]} · z ${n(a.z)}</span><small>${a.t} · roadsense_simulated</small></div>`).join(""):'<div style="border-color:var(--bd)">No anomalies yet. Inject a fault in the console.</div>'}
+$("#bgb").innerHTML=`<g fill="none" stroke="#c9a15a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${BIKE.replace(/var\(--s2\)/g,"none")}</g>`;
+document.addEventListener("click",e=>{const c=e.target.closest("[data-c]");if(c){s.sel=c.dataset.c;render()}
+ const f=e.target.closest("[data-f]");if(f){s.fault=f.dataset.f;s.fc=0;if(!s.fault)s.bw=0;document.querySelectorAll("[data-f]").forEach(b=>b.classList.toggle("fl",!!s.fault&&b===f))}});
+$("#run").onclick=()=>{s.run=!s.run;$("#run").textContent=s.run?"Pause":"Resume"};$("#pw").onchange=()=>{s.sel="engine";render()};
+setInterval(()=>{if(s.run){tick();render()}},700);render();
+</script></body></html>

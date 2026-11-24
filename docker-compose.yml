@@ -1,0 +1,11 @@
+services:
+  db:
+    image: postgres:16
+    environment: {POSTGRES_USER: rs, POSTGRES_PASSWORD: rs, POSTGRES_DB: roadsense}
+  api:
+    build: ./backend
+    environment:
+      DATABASE_URL: postgresql://rs:rs@db:5432/roadsense
+      SECRET_KEY: change-me
+    ports: ["8000:8000"]
+    depends_on: [db]
